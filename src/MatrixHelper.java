@@ -4,8 +4,6 @@ import java.util.stream.IntStream;
 
 public class MatrixHelper {
 
-    private static final int DEFAULT_MATRIX_DIMENSION = 2;
-
     private final int matrixWidth;
     private final int matrixHeight;
 
@@ -28,8 +26,8 @@ public class MatrixHelper {
     }
 
     public MatrixHelper() {
-        this.matrixWidth = DEFAULT_MATRIX_DIMENSION;
-        this.matrixHeight = DEFAULT_MATRIX_DIMENSION;
+        this.matrixWidth = Configuration.DEFAULT_MATRIX_DIMENSION;
+        this.matrixHeight = Configuration.DEFAULT_MATRIX_DIMENSION;
 
         firstMatrix = new int[matrixHeight][matrixWidth];
         secondMatrix = new int[matrixWidth][matrixHeight];
@@ -123,21 +121,19 @@ public class MatrixHelper {
     void showMatrixes() {
         System.out.println("Wprowadzone macierze : ");
         System.out.println();
-        IntStream.range(0, matrixHeight).forEach(y -> {
-            IntStream.range(0, matrixWidth).forEach(x -> {
-                System.out.print(firstMatrix[y][x] + " ");
-            });
-            System.out.println();
-        });
+        printMatrix(firstMatrix);
         System.out.println();
+        printMatrix(secondMatrix);
+        System.out.println();
+    }
 
-        IntStream.range(0, matrixWidth).forEach(y -> {
-            IntStream.range(0, matrixHeight).forEach(x -> {
-                System.out.print(secondMatrix[y][x] + " ");
-            });
+    void printMatrix(final int[][] matrix) {
+        for(int y = 0; y < matrix.length; y++) {
+            for (int x = 0; x < matrix[y].length; x++) {
+                System.out.print(matrix[y][x] + " ");
+            }
             System.out.println();
-        });
-        System.out.println();
+        }
     }
 
     public int[][] getFirstMatrix() {
