@@ -7,6 +7,7 @@ public class Client {
         final MatrixHelper helper = new MatrixHelper(2,2);
         helper.promptForMatrixInput();
 
+
         //TODO for debug, delete later
         helper.showMatrixes();
 
