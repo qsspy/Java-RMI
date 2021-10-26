@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 public class MatrixHelper {
@@ -58,9 +57,9 @@ public class MatrixHelper {
     }
 
     private void extractDataFromConsoleToMatrix(int numOfMatrix) {
-        int targetHeight;
-        int targetWidth;
-        int[][] targetMatrix;
+        final int targetHeight;
+        final int targetWidth;
+        final int[][] targetMatrix;
         if(numOfMatrix == 1) {
             targetHeight = matrixHeight;
             targetWidth = matrixWidth;
@@ -98,7 +97,7 @@ public class MatrixHelper {
         if(numOfMatrix == 1) {
             IntStream.range(0, matrixHeight).forEach(y -> {
                 IntStream.range(0, matrixWidth).forEach(x -> {
-                    System.out.print(getRandomInt(1,9) + " ");
+                    System.out.print(Utils.getRandomInt(1,9) + " ");
                 });
                 System.out.println();
             });
@@ -106,16 +105,12 @@ public class MatrixHelper {
         } else if(numOfMatrix == 2) {
             IntStream.range(0, matrixWidth).forEach(y -> {
                 IntStream.range(0, matrixHeight).forEach(x -> {
-                    System.out.print(getRandomInt(1,9) + " ");
+                    System.out.print(Utils.getRandomInt(1,9) + " ");
                 });
                 System.out.println();
             });
             System.out.println();
         }
-    }
-
-    private int getRandomInt(final int min,final int max) {
-        return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 
     void showMatrixes() {
@@ -128,9 +123,9 @@ public class MatrixHelper {
     }
 
     void printMatrix(final int[][] matrix) {
-        for(int y = 0; y < matrix.length; y++) {
-            for (int x = 0; x < matrix[y].length; x++) {
-                System.out.print(matrix[y][x] + " ");
+        for (final int[] ints : matrix) {
+            for (final int anInt : ints) {
+                System.out.print(anInt + " ");
             }
             System.out.println();
         }
