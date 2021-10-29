@@ -3,6 +3,6 @@ public class MatrixMultiplicationServiceImpl implements MatrixMultiplicationServ
     @Override
     public int[][] multiplyMatrixes(int[][] firstMatrix, int[][] secondMatrix) {
         //TODO by server
-        return null;
+        return firstMatrix;
     }
 }
