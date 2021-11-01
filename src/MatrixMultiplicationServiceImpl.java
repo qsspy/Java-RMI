@@ -6,7 +6,7 @@ import java.rmi.registry.Registry;
 public class MatrixMultiplicationServiceImpl implements MatrixMultiplicationService {
 
     CalculationService[] agents;
-    private int agentsInUse;
+    private final int agentsInUse;
 
     public MatrixMultiplicationServiceImpl(int agentsNumber) {
         this.agentsInUse = agentsNumber;
@@ -14,12 +14,7 @@ public class MatrixMultiplicationServiceImpl implements MatrixMultiplicationServ
             Registry registry = LocateRegistry.getRegistry(Configuration.RMI_REGISTRY_PORT);
             agents = new CalculationService[Configuration.MAX_AGENT_ID];
             for (int i = 0; i < Configuration.MAX_AGENT_ID; i++) {
-                int agentIndex = i + 1;
-                String[] args = new String[]{
-                        String.valueOf(agentIndex)
-                };
-                Agent.main(args);
-                agents[i] = (CalculationService) registry.lookup("Agent" + agentIndex);
+                agents[i] = (CalculationService) registry.lookup("Agent" + (i + 1));
             }
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
