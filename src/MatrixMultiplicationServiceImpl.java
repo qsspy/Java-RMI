@@ -15,7 +15,6 @@ public class MatrixMultiplicationServiceImpl implements MatrixMultiplicationServ
     public MatrixMultiplicationServiceImpl() {
         try {
             Registry registry = LocateRegistry.getRegistry(Configuration.RMI_REGISTRY_PORT);
-            System.out.println(registry.list().length);
             Arrays.stream(registry.list())
                     .filter(stub -> stub.contains("Agent"))
                     .forEach(name -> {
@@ -34,8 +33,6 @@ public class MatrixMultiplicationServiceImpl implements MatrixMultiplicationServ
 
     @Override
     public int[][] multiplyMatrixes(int[][] firstMatrix, int[][] secondMatrix) {
-
-        // TODO: Hard-coded. To fix.
         OperationDto[] multiplications = new OperationDto[]{
                 new OperationDto(firstMatrix[0][0], secondMatrix[0][0], Operator.MULTIPLY),
                 new OperationDto(firstMatrix[0][1], secondMatrix[1][0], Operator.MULTIPLY),
@@ -55,6 +52,7 @@ public class MatrixMultiplicationServiceImpl implements MatrixMultiplicationServ
                 new OperationDto(multiplicationResults[4], multiplicationResults[5], Operator.ADD),
                 new OperationDto(multiplicationResults[6], multiplicationResults[7], Operator.ADD),
         };
+
         int[] additionsResults = executeOperations(additions);
 
         return new int[][]{
