@@ -5,7 +5,7 @@ public class Configuration {
     //defines name of server in RMI registry
     public static final String SERVER_SERVICE_IMPL_NAME = "server";
     //defines port of RMI registry on local machine - for agents
-    public static final int RMI_REGISTRY_PORT = 1112;
+    public static final int RMI_REGISTRY_PORT = 1114;
     //defines port of remote object in RMI Registry
     public static final int REMOTE_OBJECT_PORT = 0;
     //defines simulated agent sleep min time

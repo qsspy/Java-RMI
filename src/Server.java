@@ -6,7 +6,7 @@ public class Server {
 
     public static void main(String[] args) {
         try {
-            Registry registry = LocateRegistry.createRegistry(Configuration.RMI_REGISTRY_PORT);
+            Registry registry = LocateRegistry.getRegistry(Configuration.RMI_REGISTRY_PORT);
 
             MatrixMultiplicationServiceImpl obj = new MatrixMultiplicationServiceImpl(Configuration.AGENTS_IN_USE);
             MatrixMultiplicationService service = (MatrixMultiplicationService) UnicastRemoteObject.exportObject(obj, 0);
