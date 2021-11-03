@@ -8,7 +8,7 @@ public class Server {
         try {
             Registry registry = LocateRegistry.getRegistry(Configuration.RMI_REGISTRY_PORT);
 
-            MatrixMultiplicationServiceImpl obj = new MatrixMultiplicationServiceImpl(Configuration.AGENTS_IN_USE);
+            MatrixMultiplicationServiceImpl obj = new MatrixMultiplicationServiceImpl();
             MatrixMultiplicationService service = (MatrixMultiplicationService) UnicastRemoteObject.exportObject(obj, 0);
 
             registry.bind(Configuration.SERVER_SERVICE_IMPL_NAME, service);

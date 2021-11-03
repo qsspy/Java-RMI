@@ -2,23 +2,34 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MatrixMultiplicationServiceImpl implements MatrixMultiplicationService {
 
-    CalculationService[] agents;
+    List<CalculationService> agents = new ArrayList<>();
     private final int agentsInUse;
 
-    public MatrixMultiplicationServiceImpl(int agentsNumber) {
-        this.agentsInUse = agentsNumber;
+    public MatrixMultiplicationServiceImpl() {
         try {
             Registry registry = LocateRegistry.getRegistry(Configuration.RMI_REGISTRY_PORT);
-            agents = new CalculationService[Configuration.MAX_AGENT_ID];
-            for (int i = 0; i < Configuration.MAX_AGENT_ID; i++) {
-                agents[i] = (CalculationService) registry.lookup("Agent" + (i + 1));
-            }
-        } catch (RemoteException | NotBoundException e) {
+            System.out.println(registry.list().length);
+            Arrays.stream(registry.list())
+                    .filter(stub -> stub.contains("Agent"))
+                    .forEach(name -> {
+                        try {
+                            agents.add((CalculationService) registry.lookup(name));
+                        } catch (RemoteException | NotBoundException e) {
+                            e.printStackTrace();
+                        }
+                    });
+            System.out.println("Wykryto " + agents.size() + " Agentów");
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
+        agentsInUse = agents.size();
     }
 
     @Override
@@ -62,18 +73,19 @@ public class MatrixMultiplicationServiceImpl implements MatrixMultiplicationServ
         Executor[] executors = new Executor[operations.length];
         int[] results = new int[operations.length];
         for (int i = 0; i < operations.length; i++) {
-            executors[i] = new Executor(agents[i % agentsInUse], operations[i]);
+            executors[i] = new Executor(agents.get(i % agentsInUse), operations[i]);
+            final int index = i;
+            executors[i].setOnCalculationFinishedListener(result -> results[index] = result);
             executors[i].start();
-
-            try {
-                executors[i].join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            results[i] = executors[i].getResult();
         }
 
+        for (int i = 0; i < operations.length; i++) {
+            try {
+                executors[i].join();
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+            }
+        }
         return results;
     }
 }
