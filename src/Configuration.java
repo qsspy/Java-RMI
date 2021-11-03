@@ -11,7 +11,7 @@ public class Configuration {
     //defines simulated agent sleep min time
     public static final long AGENT_MIN_SLEEP_TIME = 1000;
     //defines simulated agent sleep max time
-    public static final long AGENT_MAX_SLEEP_TIME = 2000;
+    public static final long AGENT_MAX_SLEEP_TIME = 1000;
     //defines max agent id (agent can have id from 1 to MAX_AGENT_ID inclusive)
     public static final int MAX_AGENT_ID = 100;
     //defines agents in use

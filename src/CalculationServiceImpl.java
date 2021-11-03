@@ -5,11 +5,15 @@ public class CalculationServiceImpl implements CalculationService{
     @Override
     synchronized public int calculate(final OperationDto operation) throws RemoteException {
         //simulatedWaitTime
+        System.out.println("Started Working....");
         try {
             Thread.sleep(Utils.getRandomLong(Configuration.AGENT_MIN_SLEEP_TIME, Configuration.AGENT_MAX_SLEEP_TIME));
         } catch (final InterruptedException exception) {
             exception.printStackTrace();
         }
+
+        //TODO jakoś zmienić
+        System.out.println("Finished Working....");
 
         switch (operation.getOperator()) {
             case ADD -> {
